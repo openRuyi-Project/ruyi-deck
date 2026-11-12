@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>openRuyi {{.channel}} {{.release}} {{.target_upper}} Release</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: monospace; padding: 20px; color: #000; background-color: #fff; }
+        .intro-text { font-family: sans-serif; margin-bottom: 30px; line-height: 1.6; max-width: 900px; }
+        .intro-text h1, .intro-text h2 { margin-top: 0; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 4px 8px; }
+        th { border-bottom: 1px solid #000; }
+        tr:hover { background-color: #f2f2f2; }
+        a { color: #0000ee; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .missing { color: #999; }
+        .copyright { margin-top: 40px; font-family: sans-serif; font-size: .9em; color: #555; border-top: 1px solid #ccc; padding-top: 15px; }
+    </style>
+</head>
+<body>
+    <div class="intro-text">
+        <h1>openRuyi {{.channel}} {{.release}} {{.target_upper}} Release</h1>
+        <p>openRuyi {{.channel}} {{.release}} ({{.target_upper}}) is distributed as the images listed below.</p>
+        <p>Target: {{.target}}</p>
+    </div>
+    {{if .missing_targets}}
+    <p>Warning: Dailybuild {{.release}} is incomplete.<br>Missing targets: {{.missing_targets}}</p>
+    {{end}}
+    <h2>Index of {{.path}}</h2>
+    <table>
+        <thead>
+            <tr><th>Name</th><th>Last modified</th><th>Size</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><a href="../">Parent Directory</a></td><td></td><td></td><td></td></tr>
+            {{range .files}}
+            {{if .Present}}
+            <tr>
+                <td><a href="{{.Name}}">{{.Name}}</a></td>
+                <td>{{.Modified}}</td><td>{{.Size}}</td><td>{{.Description}}</td>
+            </tr>
+            {{else}}
+            <tr>
+                <td class="missing">{{.Name}}</td><td></td><td></td><td>{{.Description}}</td>
+            </tr>
+            {{end}}
+            {{end}}
+        </tbody>
+    </table>
+    <div class="copyright">
+        <p>© {{.copyright_year}} openRuyi Project Contributors.</p>
+        <p><a href="https://www.iscas.ac.cn/">ISCAS</a> | <a href="https://beian.miit.gov.cn/">京ICP备05046678号-71</a></p>
+    </div>
+</body>
+</html>

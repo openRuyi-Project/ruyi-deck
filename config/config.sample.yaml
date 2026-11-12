@@ -1,0 +1,70 @@
+version: 1
+
+# IANA names (Asia/Taipei) and fixed UTC offsets are supported.
+timezone: "UTC+08:00"
+
+# Relative paths are resolved beside this YAML, regardless of the working directory.
+paths:
+  repo_root: /srv/repo
+  releases_root: /srv/releases
+  archive_root: /srv/archive
+  staging_root: /srv/releases/.staging
+
+layout:
+  repo:
+    rolling: rolling
+  releases:
+    rolling: rolling
+  archive:
+    repo_root: repo
+    repo:
+      rolling: rolling
+
+targets:
+  rva23:
+    enabled: true
+    repo:
+      enabled: true
+      source_path: rva23/riscv64
+    dailybuild:
+      enabled: true
+      ovmf_base_url: "https://repo.example.org/rolling/rva23/riscv64/"
+  rva20:
+    enabled: true
+    repo:
+      enabled: true
+      source_path: rva20/riscv64
+    dailybuild:
+      enabled: true
+      ovmf_base_url: "https://repo.example.org/rolling/rva20/riscv64/"
+  x86_64:
+    enabled: true
+    repo:
+      enabled: true
+      source_path: x86_64
+    dailybuild:
+      enabled: false
+
+sources:
+  repo:
+    rolling_base_url: "https://repo.example.org/rolling/"
+  dailybuild:
+    build_base_url: "https://images.example.org/"
+    github:
+      owner: example-owner
+      repository: example-repo
+      # Use the workflow filename: run IDs change with every execution.
+      workflow: build.yml
+      artifact_name: output
+      # Only the environment variable NAME belongs here, never the token itself.
+      token_env: GITHUB_TOKEN
+
+dailybuild:
+  current_link: current
+  channel: Rolling
+
+retention:
+  dailybuild_days: 7
+
+# Resolved beside this configuration file.
+artifact_manifest: dailybuild-artifacts.sample.yaml
