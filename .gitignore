@@ -29,6 +29,10 @@ go.work.sum
 # env file
 .env
 
+# Deployment configuration stays local; publish only the sample files.
+/config/*.yaml
+!/config/*.sample.yaml
+
 # Editor/IDE
 # .idea/
 # .vscode/
