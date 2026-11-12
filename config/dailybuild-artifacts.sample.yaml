@@ -1,0 +1,169 @@
+version: 1
+
+# Six static images are required; Zero and OVMF artifacts are optional.
+# Static paths below are examples relative to sources.dailybuild.build_base_url.
+artifacts:
+  - id: rootfs
+    filename: "openRuyi-{date}-rootfs.tar"
+    description: "Container Edition (rootfs, with systemd)"
+    required: true
+    sources:
+      rva20:
+        type: static
+        path: "images/rva20/rootfs.tar"
+      rva23:
+        type: static
+        path: "images/rva23/rootfs.tar"
+
+  - id: rootfs-oci
+    filename: "openRuyi-{date}-rootfs-oci.tar"
+    description: "Container Edition (OCI, without systemd)"
+    required: true
+    sources:
+      rva20:
+        type: static
+        path: "images/rva20/rootfs-oci.tar"
+      rva23:
+        type: static
+        path: "images/rva23/rootfs-oci.tar"
+
+  - id: server-cloud
+    filename: "openRuyi-{date}-Server-cloud.qcow2"
+    description: "Server Edition (Qcow2)"
+    required: true
+    sources:
+      rva20:
+        type: static
+        path: "images/rva20/server-cloud.qcow2"
+      rva23:
+        type: static
+        path: "images/rva23/server-cloud.qcow2"
+
+  - id: server-dvd
+    filename: "openRuyi-{date}-Server-dvd.iso"
+    description: "Server Edition (ISO)"
+    required: true
+    sources:
+      rva20:
+        type: static
+        path: "images/rva20/server-dvd.iso"
+      rva23:
+        type: static
+        path: "images/rva23/server-dvd.iso"
+
+  - id: workstation-labwc
+    filename: "openRuyi-{date}-Workstation-labwc-dvd.iso"
+    description: "Workstation Edition (labwc, ISO)"
+    required: true
+    sources:
+      rva20:
+        type: static
+        path: "images/rva20/workstation-labwc-dvd.iso"
+      rva23:
+        type: static
+        path: "images/rva23/workstation-labwc-dvd.iso"
+
+  - id: workstation-kde
+    filename: "openRuyi-{date}-Workstation-kde-dvd.iso"
+    description: "Workstation Edition (KDE, ISO)"
+    required: true
+    sources:
+      rva20:
+        type: static
+        path: "images/rva20/workstation-kde-dvd.iso"
+      rva23:
+        type: static
+        path: "images/rva23/workstation-kde-dvd.iso"
+
+
+  - id: zero-rootfs
+    filename: "openRuyi-{date}-zero.cpio.gz"
+    description: "Zero Edition - rootfs"
+    required: false
+    sources:
+      rva20:
+        type: github
+        match: "openruyi-base.cpio.gz"
+      rva23:
+        type: github
+        match: "openruyi-base.cpio.gz"
+
+  - id: zero-kernel
+    filename: "openRuyi-{date}-zero.kernel"
+    description: "Zero Edition - Kernel"
+    required: false
+    sources:
+      rva20:
+        type: github
+        match: "openruyi-linux-core-vmlinuz-*"
+      rva23:
+        type: github
+        match: "openruyi-linux-core-vmlinuz-*"
+
+  - id: zero-modules
+    filename: "openRuyi-{date}-zero.kernel-modules.cpio"
+    description: "Zero Edition - Kernel Modules"
+    required: false
+    sources:
+      rva20:
+        type: github
+        match: "openruyi-linux-modules-*.cpio"
+      rva23:
+        type: github
+        match: "openruyi-linux-modules-*.cpio"
+
+  - id: zero-kernel-lts
+    filename: "openRuyi-{date}-zero.kernel-lts"
+    description: "Zero Edition - LTS Kernel"
+    required: false
+    sources:
+      rva20:
+        type: github
+        match: "openruyi-linux-lts-core-vmlinuz-*"
+      rva23:
+        type: github
+        match: "openruyi-linux-lts-core-vmlinuz-*"
+
+  - id: zero-modules-lts
+    filename: "openRuyi-{date}-zero.kernel-lts-modules.cpio"
+    description: "Zero Edition - LTS Kernel Modules"
+    required: false
+    sources:
+      rva20:
+        type: github
+        match: "openruyi-linux-lts-modules-*.cpio"
+      rva23:
+        type: github
+        match: "openruyi-linux-lts-modules-*.cpio"
+
+  - id: ovmf-code
+    filename: RISCV_VIRT_CODE.fd
+    description: "RISC-V virtual firmware code"
+    required: false
+    sources:
+      rva20:
+        type: rpm
+        package: ovmf
+        architecture: riscv64
+        internal_path: usr/share/ovmf/virt_code.fd
+      rva23:
+        type: rpm
+        package: ovmf
+        architecture: riscv64
+        internal_path: usr/share/ovmf/virt_code.fd
+
+  - id: ovmf-vars
+    filename: RISCV_VIRT_VARS.fd
+    description: "RISC-V virtual firmware variables"
+    required: false
+    sources:
+      rva20:
+        type: rpm
+        package: ovmf
+        architecture: riscv64
+        internal_path: usr/share/ovmf/virt_vars.fd
+      rva23:
+        type: rpm
+        package: ovmf
+        architecture: riscv64
+        internal_path: usr/share/ovmf/virt_vars.fd

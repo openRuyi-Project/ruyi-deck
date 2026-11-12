@@ -1,0 +1,65 @@
+# Synthetic configuration shared by tests; independent of deployment samples.
+version: 1
+timezone: "UTC+08:00"
+
+paths:
+  repo_root: repo
+  releases_root: releases
+  archive_root: archive
+  staging_root: releases/.staging
+
+layout:
+  repo:
+    rolling: rolling
+  releases:
+    rolling: rolling
+  archive:
+    repo_root: repo
+    repo:
+      rolling: rolling
+
+targets:
+  rva23:
+    enabled: true
+    repo:
+      enabled: true
+      source_path: rva23/riscv64
+    dailybuild:
+      enabled: true
+      ovmf_base_url: "https://repo.example.org/rolling/rva23/riscv64/"
+  rva20:
+    enabled: true
+    repo:
+      enabled: true
+      source_path: rva20/riscv64
+    dailybuild:
+      enabled: true
+      ovmf_base_url: "https://repo.example.org/rolling/rva20/riscv64/"
+  x86_64:
+    enabled: true
+    repo:
+      enabled: true
+      source_path: x86_64
+    dailybuild:
+      enabled: false
+
+sources:
+  repo:
+    rolling_base_url: "https://repo.example.org/rolling/"
+  dailybuild:
+    build_base_url: "https://images.example.org/"
+    github:
+      owner: example-owner
+      repository: example-repo
+      workflow: build.yml
+      artifact_name: output
+      token_env: GITHUB_TOKEN
+
+dailybuild:
+  current_link: current
+  channel: Rolling
+
+retention:
+  dailybuild_days: 7
+
+artifact_manifest: dailybuild-artifacts.yaml
