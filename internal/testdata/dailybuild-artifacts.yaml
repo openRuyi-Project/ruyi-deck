@@ -1,0 +1,42 @@
+# Synthetic sources cover static, GitHub, and RPM configuration validation.
+version: 1
+artifacts:
+  - id: rootfs
+    filename: "image-{date}-{target}.tar"
+    description: "Required root filesystem"
+    required: true
+    sources:
+      rva20:
+        type: static
+        path: "build:/rva20/rootfs.tar"
+      rva23:
+        type: static
+        path: "build:/rva23/rootfs.tar"
+
+  - id: kernel
+    filename: "kernel-{date}-{target}"
+    description: "Optional kernel"
+    required: false
+    sources:
+      rva20:
+        type: github
+        match: "example-kernel-*"
+      rva23:
+        type: github
+        match: "example-kernel-*"
+
+  - id: firmware
+    filename: firmware.fd
+    description: "Optional firmware"
+    required: false
+    sources:
+      rva20:
+        type: rpm
+        package: ovmf
+        architecture: riscv64
+        internal_path: usr/share/ovmf/virt_code.fd
+      rva23:
+        type: rpm
+        package: ovmf
+        architecture: riscv64
+        internal_path: usr/share/ovmf/virt_code.fd
